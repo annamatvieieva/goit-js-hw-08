@@ -11,17 +11,17 @@ getlastUserData(lastUserData);
 saveUserDataLS();
 clearUserDataLS();
 
-function saveUserDataLS() {
-  form.addEventListener('input', () => {
-    const userEmail = event.currentTarget.elements.email.value;
-    const userMessage = event.currentTarget.elements.message.value;
-    const userData = {
+form.addEventListener('input', throttle(saveUserDataLS, 500));
+ 
+function saveUserDataLS(event) {
+  const userEmail = event.currentTarget.elements.email.value;
+  const userMessage = event.currentTarget.elements.message.value;
+  const userData = {
       email: userEmail,
       message: userMessage,
     };
-    const userDataJSON = JSON.stringify(userData);
-    localStorage.setItem(localStorageKey, userDataJSON);
-  });
+  const userDataJSON = JSON.stringify(userData);
+  localStorage.setItem(localStorageKey, userDataJSON);
 }
 function clearUserDataLS() {
   form.addEventListener('submit', () => {
@@ -44,6 +44,11 @@ function getlastUserData(data) {
     textareaMessage.value = lastUserData.message;
   }
 }
+
+
+
+
+
 
 
 // try {

@@ -7,7 +7,7 @@ const localStorageKey = 'videoplayer-current-time';
 const lastPlaybackTime = JSON.parse(localStorage.getItem(localStorageKey));
 let gCurrentTime = { seconds: 0 };
 const throttling = throttle(() => {
-  localStorage.setItem(localStorageKey, Math.floor(gCurrentTime.seconds));
+  localStorage.setItem(localStorageKey, Math.round(gCurrentTime.seconds));
 }, 1000);
 
 getlastPlaybackTime(lastPlaybackTime);
@@ -19,6 +19,7 @@ function savePlayTimeLS() {
     throttling();
   });
 }
+
 function getlastPlaybackTime(time) {
   if (time) {
     console.log('Вы остановились на', time, 'сек.');

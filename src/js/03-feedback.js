@@ -5,24 +5,31 @@ const button = document.querySelector('button[type="submit"]');
 const inputEmail = document.querySelector('input[type="email"]');
 const textareaMessage = document.querySelector('textarea[name="message"]');
 const localStorageKey = 'feedback-form-state';
-const lastUserData = JSON.parse(localStorage.getItem(localStorageKey));
+let lastUserData;
+
+try {
+  lastUserData = JSON.parse(localStorage.getItem(localStorageKey));
+} catch (error) {
+  console.log(error.name); // "SyntaxError"
+  console.log(error.message); // "Unexpected token u in JSON at position 1"
+}
 
 getlastUserData(lastUserData);
-saveUserDataLS();
 clearUserDataLS();
 
 form.addEventListener('input', throttle(saveUserDataLS, 500));
- 
+
 function saveUserDataLS(event) {
-  const userEmail = event.currentTarget.elements.email.value;
-  const userMessage = event.currentTarget.elements.message.value;
+  const userEmail = form.elements.email.value;
+  const userMessage = form.elements.message.value;
   const userData = {
-      email: userEmail,
-      message: userMessage,
-    };
+    email: userEmail,
+    message: userMessage,
+  };
   const userDataJSON = JSON.stringify(userData);
   localStorage.setItem(localStorageKey, userDataJSON);
 }
+
 function clearUserDataLS() {
   form.addEventListener('submit', () => {
     event.preventDefault();
@@ -38,22 +45,10 @@ function clearUserDataLS() {
     textareaMessage.value = '';
   });
 }
+
 function getlastUserData(data) {
   if (data) {
     inputEmail.value = lastUserData.email;
     textareaMessage.value = lastUserData.message;
   }
 }
-
-
-
-
-
-
-
-// try {
-//   const data = JSON.parse('{username: "Mango"}');
-// } catch (error) {
-//   console.log(error.name); // "SyntaxError"
-//   console.log(error.message); // "Unexpected token u in JSON at position 1"
-// }

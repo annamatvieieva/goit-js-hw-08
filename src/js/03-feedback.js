@@ -12,7 +12,7 @@ saveUserDataLS();
 clearUserDataLS();
 
 function saveUserDataLS() {
-  form.addEventListener('input', throttle(() => {
+  form.addEventListener('input', () => {
     const userEmail = event.currentTarget.elements.email.value;
     const userMessage = event.currentTarget.elements.message.value;
     const userData = {
@@ -21,7 +21,7 @@ function saveUserDataLS() {
     };
     const userDataJSON = JSON.stringify(userData);
     localStorage.setItem(localStorageKey, userDataJSON);
-  }, 500));
+  });
 }
 function clearUserDataLS() {
   form.addEventListener('submit', () => {
